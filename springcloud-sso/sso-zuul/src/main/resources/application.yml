@@ -1,0 +1,29 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: module-zuul # 应用程序名称可以重复，代表多个服务副本
+
+# 进行服务注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka.top:3000/eureka  # eureka服务端提供的注册地址
+  instance:
+    instance-id: module-zuul # 注册到eureka的应用程序的唯一标识，不能重复
+    prefer-ip-address: true  # 是否显示标识
+    lease-renewal-interval-in-seconds: 5  # eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
+
+# 配置zuul
+zuul:
+  prefix: /api # 指定访问服务的前缀
+  #  ignored-services: '*' # 配置需要忽略路由的服务,如果这里忽略了那么就不可以通过微服务名称的方式访问
+  routes:
+    # 会将**的内容转发到对应的服务  /api/user/login  ->  /login
+    users:
+      serviceId: module-user
+      path: /user/**
+    powers:
+      serviceId: module-qr
+      path: /qr/**
