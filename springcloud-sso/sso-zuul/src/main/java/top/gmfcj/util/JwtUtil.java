@@ -10,16 +10,13 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class JwtUtil {
 
     // 解密的密钥 加密的时候传入密钥 解密的时候使用密钥来解析
-    public static final String JWT_KEY = "login-key";
+    public static final String JWT_KEY = "login_key";
 
     /**
      * 由字符串生成加密key
@@ -91,14 +88,22 @@ public class JwtUtil {
         user.put("username", "123");
         user.put("password", "321");
         //把数据转换为JWT token
-        String jwt = createJWT(UUID.randomUUID().toString(), objectMapper.writeValueAsString(user), 3600 * 24);
+//        String jwt = createJWT(UUID.randomUUID().toString(), objectMapper.writeValueAsString(user), 3600 * 24);
+//
+//        System.out.println("加密后的" + jwt);
+//        //解密
+//        Claims claims = parseJWT(jwt);
+//
+//        System.out.println("解密后的" + claims.getSubject());
 
-        System.out.println("加密后的" + jwt);
-        //解密
-        Claims claims = parseJWT(jwt);
 
-        System.out.println("解密后的" + claims.getSubject());
+        System.out.println(objectMapper.writeValueAsString(user));
 
+        ArrayList<Object> list = new ArrayList<>();
+        list.add(user);
+        list.add(user);
+        list.add(user);
+        System.out.println(objectMapper.writeValueAsString(list));
     }
 
 

@@ -9,26 +9,25 @@ public class CookieUtil {
 
     public static final String COOKIE_KEY = "LOGIN_COOKIE";
 
-    public  static String getLoginCookie(HttpServletRequest request, HttpServletResponse response){
-        if (request.getCookies()!=null){
+    public static String getLoginCookie(HttpServletRequest request) {
+        if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 String name = cookie.getName();
-                if (COOKIE_KEY.equals(name)){
+                if (COOKIE_KEY.equals(name)) {
                     return cookie.getValue();
                 }
             }
         }
-       return null;
+        return null;
     }
 
-    public  static String serLoginCookie(HttpServletRequest request, HttpServletResponse response){
+    public static String setLoginCookie(HttpServletRequest request, HttpServletResponse response) {
         String uuid = UUID.randomUUID().toString();
-        Cookie cookie = new Cookie(COOKIE_KEY,uuid);
+        Cookie cookie = new Cookie(COOKIE_KEY, uuid);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
         return uuid;
     }
-
 
 
 }
