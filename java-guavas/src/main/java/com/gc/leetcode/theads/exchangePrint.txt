@@ -1,0 +1,79 @@
+1、使用synchronized关键字
+class FooBar {
+    private Object lock = new Object();
+    private boolean status = true;
+
+    public void foo() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            synchronized (lock){
+                while(!status){
+                    lock.wait();
+                }
+                System.out.print("foo");
+                status = false;
+                lock.notify();
+            }
+
+        }
+    }
+
+    public void bar() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            synchronized (lock){
+                while(status){
+                    lock.wait();
+                }
+                System.out.print("bar\n");
+                status = true;
+                lock.notify();
+            }
+        }
+    }
+}
+2、使用volatile
+class FooBar {
+
+    private volatile boolean status = true;
+
+    public void foo() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            while (!status) {
+            }
+            System.out.print("foo");
+            status = false;
+        }
+    }
+
+    public void bar() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            while (status) {
+            }
+            System.out.print("bar\n");
+            status = true;
+        }
+    }
+}
+3、信号量Semaphore
+class FooBar {
+
+    private Semaphore fooPhore = new Semaphore(0);
+    private Semaphore barPhore = new Semaphore(1);
+
+
+    public void foo() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            // 最开始需要可以进来执行
+            barPhore.acquire();
+            System.out.print("foo");
+            fooPhore.release();
+        }
+    }
+
+    public void bar() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            fooPhore.acquire();
+            System.out.print("bar\n");
+            barPhore.release();
+        }
+    }
+}

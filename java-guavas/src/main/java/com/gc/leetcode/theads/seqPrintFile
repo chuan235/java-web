@@ -1,0 +1,115 @@
+1、使用同步组件countDownLatch
+class Foo {
+    private CountDownLatch seconde = new CountDownLatch(1);
+    private CountDownLatch third = new CountDownLatch(1);
+
+    public void one() {
+        System.out.println(Thread.currentThread().getName() + ": one");
+        seconde.countDown();
+    }
+
+    public void two() throws InterruptedException {
+        seconde.await();
+        System.out.println(Thread.currentThread().getName() + ": two");
+        third.countDown();
+    }
+
+    public void three() throws InterruptedException {
+        third.await();
+        System.out.println(Thread.currentThread().getName() + ": three");
+    }
+}
+2、同步组件Semaphore
+class Foo {
+
+    private Semaphore sencond = new Semaphore(0);
+    private Semaphore third = new Semaphore(0);
+
+
+    public void one() throws InterruptedException {
+        System.out.println(Thread.currentThread().getName() + ": one");
+        sencond.release();
+    }
+
+    public void two() throws InterruptedException {
+        sencond.acquire();
+        System.out.println(Thread.currentThread().getName() + ": two");
+        third.release();
+    }
+
+    public void three() throws InterruptedException {
+        third.acquire();
+        System.out.println(Thread.currentThread().getName() + ": three");
+    }
+}
+3、利用CAS的自旋
+
+class Foo {
+
+    private volatile int a = 0;
+
+    public void one() throws InterruptedException {
+        for(;;){
+            if(a == 0){
+                System.out.println(Thread.currentThread().getName() + ": one");
+                a = 1;
+                break;
+            }
+        }
+    }
+
+    public void two() throws InterruptedException {
+        for(;;){
+            if(a == 1){
+                System.out.println(Thread.currentThread().getName() + ": two");
+                a = 2;
+                break;
+            }
+        }
+    }
+
+    public void three() throws InterruptedException {
+        for(;;){
+            if(a == 2){
+                System.out.println(Thread.currentThread().getName() + ": three");
+                a = 3;
+                break;
+            }
+        }
+    }
+}
+4、synchronized对象锁实现
+class Foo {
+
+    private Object lock = new Object();
+    private int status = 0;
+
+    public void one() throws InterruptedException {
+        synchronized (lock) {
+            status++;
+            System.out.println(Thread.currentThread().getName() + ": one");
+            lock.notify();
+        }
+    }
+
+    public void two() throws InterruptedException {
+        synchronized (lock) {
+            while (status != 1) {
+                lock.wait();
+            }
+            System.out.println(Thread.currentThread().getName() + ": two");
+            status++;
+            lock.notify();
+        }
+    }
+
+    public void three() throws InterruptedException {
+        synchronized (lock) {
+            while (status != 2) {
+                lock.wait();
+            }
+            System.out.println(Thread.currentThread().getName() + ": three");
+            lock.notify();
+        }
+    }
+}
