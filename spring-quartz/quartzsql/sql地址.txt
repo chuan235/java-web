@@ -1,0 +1,8 @@
+http://www.quartz-scheduler.org
+
+选择一个tar.gz文件下载
+http://www.quartz-scheduler.org/downloads/
+
+sql路径： quartz-2.2.3-distribution.tar\quartz-2.2.3\docs\dbTables
+
+github： https://github.com/quartz-scheduler/quartz

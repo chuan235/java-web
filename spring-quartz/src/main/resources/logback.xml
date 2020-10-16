@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    scan: 配置文件如果发生改变，将会被重新加载
+    scanPeriod: 监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。默认1分钟
+    debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态
+-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false" >
+    <!--
+        configuration下的子节点：
+            appender
+            logger
+            root
+        设置上下文名称：<contextName>myAppName</contextName>  =>  %contextName
+        设置变量：<property name="" value="" />  =>  ${}
+    -->
+	<property name="log.path" value="C:/dev/log" />
+	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+	<!-- 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="console" />
+	</root>
+
+
+</configuration> 
