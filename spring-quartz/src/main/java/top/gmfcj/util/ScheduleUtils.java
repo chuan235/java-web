@@ -9,6 +9,7 @@ import top.gmfcj.constants.ScheduleConstants;
 import top.gmfcj.exception.TaskException;
 import top.gmfcj.execution.QuartzDisallowConcurrentExecution;
 import top.gmfcj.execution.QuartzJobExecution;
+import top.gmfcj.schedule.ScheduleJob;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,7 +34,10 @@ public class ScheduleUtils {
      */
     private static Class<? extends Job> getQuartzJobClass(SysJob sysJob) {
         boolean isConcurrent = "0".equals(sysJob.getConcurrent());
+        // 使用quartz的线程池  => CodeScheduler_Worker-1
         return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
+        // 使用自定义的线程池 => threadPoolTaskExecutor-1
+//         return ScheduleJob.class;
     }
 
     /**

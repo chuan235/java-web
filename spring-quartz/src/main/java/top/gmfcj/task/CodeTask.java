@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component("codeTask")
 public class CodeTask {
 
-    public void printJob(){
-        System.out.println("print job 运行中.............");
+    public void printJob() {
+        System.out.println(Thread.currentThread().getName() + " print job 运行中.............");
     }
 }

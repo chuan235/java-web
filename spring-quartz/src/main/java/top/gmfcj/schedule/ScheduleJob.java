@@ -1,4 +1,4 @@
-package top.gmfcj.util;
+package top.gmfcj.schedule;
 
 
 import org.quartz.DisallowConcurrentExecution;
@@ -12,11 +12,12 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import top.gmfcj.bean.SysJob;
 import top.gmfcj.config.SpringUtils;
 import top.gmfcj.constants.ScheduleConstants;
+import top.gmfcj.util.ScheduleUtils;
 
 import java.util.concurrent.Future;
 
 /**
- * 定时任务处理
+ * 使用自己的线程池进行定时任务处理
  */
 @DisallowConcurrentExecution
 public class ScheduleJob extends QuartzJobBean {
@@ -28,7 +29,7 @@ public class ScheduleJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         SysJob job = new SysJob();
-        BeanUtils.copyProperties(job, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
+        ScheduleUtils.copyBeanProp(job, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
         long startTime = System.currentTimeMillis();
         try {
             // 执行任务
