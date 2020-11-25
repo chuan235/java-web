@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.gmfcj.bean.Info;
-import top.gmfcj.mapper.InfoMapper;
 
 import java.util.List;
 
@@ -15,14 +14,14 @@ import java.util.List;
 @SpringBootTest
 public class SampleTest {
 
-    @Autowired
-    private InfoMapper infoMapper;
-
-    @Test
-    public void testSelect() {
-        System.out.println(("----- selectAll method test ------"));
-        List<Info> userList = infoMapper.selectList(null);
-        Assert.assertEquals(5, userList.size());
-        userList.forEach(System.out::println);
-    }
+//    @Autowired
+//    private InfoMapper infoMapper;
+//
+//    @Test
+//    public void testSelect() {
+//        System.out.println(("----- selectAll method test ------"));
+//        List<Info> userList = infoMapper.selectList(null);
+//        Assert.assertEquals(5, userList.size());
+//        userList.forEach(System.out::println);
+//    }
 }

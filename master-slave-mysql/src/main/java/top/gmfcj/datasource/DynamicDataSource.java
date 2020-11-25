@@ -21,8 +21,11 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     @Override
     protected Object determineCurrentLookupKey() {
-        String typeKey = DynamicDataSourceContextHolder.getDataSoureType();
-        if(typeKey == DataSourceType.MASTER.name()){
+        /**
+         * @see AbstractRoutingDataSource#determineTargetDataSource()
+         */
+        DataSourceType typeKey = DynamicDataSourceContextHolder.getDataSoureType();
+        if(typeKey == DataSourceType.MASTER){
             log.info("使用了master - 写库");
         }else{
             log.info("使用了slave - 读库");

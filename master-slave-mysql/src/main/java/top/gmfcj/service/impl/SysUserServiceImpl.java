@@ -20,13 +20,20 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @Write
     public int insert(SysUser sysUser) {
+        // 查询一下数据库的主机名
+        sysUserMapper.queryServerName().forEach(s -> System.out.println(s));
         return sysUserMapper.insert(sysUser);
     }
 
     // 使用读数据库
     @Override
     @Read
-    public List<SysUser> selectList(){
+    public List<SysUser> selectList() {
+//        System.out.println(sysUserMapper.queryServerName());
+        List<String> list = sysUserMapper.queryServerName();
+        for (String s : list) {
+            System.out.println(s);
+        }
         return sysUserMapper.selectList(null);
     }
 }

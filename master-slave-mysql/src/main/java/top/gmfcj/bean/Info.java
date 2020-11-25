@@ -10,9 +10,14 @@ import lombok.Data;
 @Data
 public class Info {
 
-    private Long id;
-    private String name;
-    private Integer age;
-    private String email;
+    private String spid;
+    private String ecid;
+    private String status;
+    private String loginame;
+    private String hostname;
+    private String blk;
+    private String dbname;
+    private String cmd;
+    private String request_id;
 
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.gmfcj.bean.Info;
 import top.gmfcj.bean.SysUser;
-import top.gmfcj.mapper.InfoMapper;
 import top.gmfcj.service.ISysUserService;
 
 import java.util.List;
@@ -16,18 +15,18 @@ import java.util.List;
 @RestController
 public class SysUserController {
 
-    @Autowired
-    private InfoMapper infoMapper;
+//    @Autowired
+//    private InfoMapper infoMapper;
 
     @Autowired
     private ISysUserService userService;
 
-    @RequestMapping("/list")
-    public List<Info> list(){
-        QueryWrapper<Info> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("id","name","age","email");
-        return infoMapper.selectList(null);
-    }
+//    @RequestMapping("/list")
+//    public List<Info> list(){
+//        QueryWrapper<Info> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.select("id","name","age","email");
+//        return infoMapper.selectList(null);
+//    }
 
     @GetMapping("/user/{id}/{name}")
     public String addUser(@PathVariable Integer id,@PathVariable String name){

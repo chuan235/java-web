@@ -4,4 +4,52 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.gmfcj.mapper.SysUserMapper">
 
+    <resultMap type="top.gmfcj.bean.SysUser" id="SysUserResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <resultMap type="top.gmfcj.bean.Info" id="InfoResult">
+        <id property="spid" column="spid" />
+        <id property="ecid" column="ecid" />
+        <id property="status" column="status" />
+        <id property="loginame" column="loginame" />
+        <id property="hostname" column="hostname" />
+        <id property="blk" column="blk" />
+        <id property="dbname" column="dbname" />
+        <id property="cmd" column="cmd" />
+        <id property="request_id" column="request_id" />
+    </resultMap>
+
+    <sql id="selectSysUserInfo">
+        select id,name from sys_user
+    </sql>
+
+    <select id="selectList" parameterType="top.gmfcj.bean.SysUser" resultMap="SysUserResult">
+        <include refid="selectSysUserInfo"/>
+        <where>
+            <if test="id != null  and id != '' ">and id = #{id}</if>
+            <if test="name != null  and name != '' ">and name = #{name}</if>
+        </where>
+    </select>
+
+ <!--   <select id="queryServerName" resultType="java.lang.String">
+      select name from [sys].[databases]
+    </select>-->
+
+
+    <insert id="insert" parameterType="top.gmfcj.bean.SysUser">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">id,</if>
+            <if test="name != null  and name != ''  ">name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">#{id},</if>
+            <if test="name != null  and name != ''  ">#{name},</if>
+        </trim>
+    </insert>
+
+
+
 </mapper>

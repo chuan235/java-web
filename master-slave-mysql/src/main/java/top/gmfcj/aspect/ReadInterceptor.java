@@ -14,10 +14,10 @@ import top.gmfcj.datasource.DynamicDataSourceContextHolder;
 @Component
 public class ReadInterceptor implements Ordered {
 
-    private static final Logger log= LoggerFactory.getLogger(ReadInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(ReadInterceptor.class);
 
     @Pointcut("@annotation(top.gmfcj.anno.Read)")
-    public void ReadPointCut(){
+    public void ReadPointCut() {
 
     }
 
@@ -26,12 +26,11 @@ public class ReadInterceptor implements Ordered {
         try {
             DynamicDataSourceContextHolder.slave();
             return joinPoint.proceed();
-        }finally {
+        } finally {
             DynamicDataSourceContextHolder.clearDataSoureType();
             log.info("清除threadLocal");
         }
     }
-
 
 
     @Override
